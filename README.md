@@ -8,7 +8,7 @@ navigate between the differences with the `n` and `N` keys.
 
 # See it in action
 
-http://i.stack.imgur.com/HaB5Y.gif
+![Example of usage](http://i.stack.imgur.com/HaB5Y.gif)
 
 # How to use it
 
