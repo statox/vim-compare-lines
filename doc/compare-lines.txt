@@ -1,0 +1,3 @@
+*compare-lines.txt* Diff two lines in a buffer and navigate through the changes
+
+TODOm: create a documentation
