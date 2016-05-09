@@ -48,7 +48,7 @@ This plugin was inspired by this question on the site vi.stackexchange.com:
 The sources of the plugin are available on github:
     http://github.com/statox/vim-compare-lines
 
-The plugin is distributed under the MIT license. See the LICENCE file which
+The plugin is distributed under the MIT license. See the LICENSE file which
 comes with the plugin, or here:
     https://opensource.org/licenses/MIT
 
