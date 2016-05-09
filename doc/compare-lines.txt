@@ -1,3 +1,53 @@
 *compare-lines.txt* Diff two lines in a buffer and navigate through the changes
 
-TODOm: create a documentation
+==============================================================================
+Compare-lines                               *compare-lines*
+
+1. Introduction                             |compare-lines-intro|
+2. Compare-lines Usage                      |compare-lines-usage|
+3. About                                    |compare-lines-about|
+
+==============================================================================
+1. Introduction                             *compare-lines-intro*
+
+Compare-lines is a plugin which allows you to select two lines and put the
+differencies between these lines in the search register.
+
+The differences are then highlighted as searches and you can navigate through
+them with the |n| and |N| commands
+
+==============================================================================
+2. Compare-lines Usage                      *compare-lines-usage*
+                                            *:CL*
+
+Compare-lines enable the *:CL* command which start the diff between two lines.
+The command can be used with three types of invocation:
+
+    :CL
+
+Will start the diff between current line (where the cursor is currently
+positionned and the line under it.
+
+    :CL 42
+
+Will start the diff between the current line and the line 42
+
+    :CL 42 66
+
+Will start the diff between the line 42 and the line 66
+
+==============================================================================
+3. Compare-lines About                      *compare-lines-about*
+
+This plugin was inspired by this question on the site vi.stackexchange.com:
+    http://vi.stackexchange.com/q/7348/1841
+
+The sources of the plugin are available on github:
+    http://github.com/statox/vim-compare-lines
+
+The plugin is distributed under the MIT license. See the LICENCE file which
+comes with the plugin, or here:
+    https://opensource.org/licenses/MIT
+
+
+vim:tw=78:ts=8:ft=help:norl:
