@@ -4,10 +4,10 @@
 " License:  This file is distributed under the MIT License
 
 " Create the command allowing to call the function
-command! -nargs=* CL call CompareLines(<f-args>)
+command! -nargs=* CL call <SID>CompareLines(<f-args>)
 
 " Get two different lines and put the differences in the search register
-function! CompareLines(...)
+function! s:CompareLines(...)
 
     " Check the number of arguments
     " And get lines numbers
