@@ -27,7 +27,7 @@ The command can be used with three types of invocation:
     :CL
 <
 Will start the diff between current line (where the cursor is currently
-positionned and the line under it.
+positionned) and the line under it.
 
 >
     :CL 42
