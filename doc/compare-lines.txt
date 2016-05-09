@@ -23,17 +23,20 @@ them with the |n| and |N| commands
 Compare-lines enable the *:CL* command which start the diff between two lines.
 The command can be used with three types of invocation:
 
+>
     :CL
-
+<
 Will start the diff between current line (where the cursor is currently
 positionned and the line under it.
 
+>
     :CL 42
-
+<
 Will start the diff between the current line and the line 42
 
+>
     :CL 42 66
-
+<
 Will start the diff between the line 42 and the line 66
 
 ==============================================================================
