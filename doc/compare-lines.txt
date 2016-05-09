@@ -14,7 +14,7 @@ Compare-lines is a plugin which allows you to select two lines and put the
 differencies between these lines in the search register.
 
 The differences are then highlighted as searches and you can navigate through
-them with the |n| and |N| commands
+them with the |n| and |N| commands.
 
 ==============================================================================
 2. Compare-lines Usage                      *compare-lines-usage*
@@ -32,12 +32,12 @@ positionned) and the line under it.
 >
     :CL 42
 <
-Will start the diff between the current line and the line 42
+Will start the diff between the current line and the line 42.
 
 >
     :CL 42 66
 <
-Will start the diff between the line 42 and the line 66
+Will start the diff between the line 42 and the line 66.
 
 ==============================================================================
 3. Compare-lines About                      *compare-lines-about*
