@@ -3,8 +3,10 @@
 " Author:   statox
 " License:  This file is distributed under the MIT License
 
-" Create the command allowing to call the function
+" Create the commands
 command! -nargs=* CL call <SID>CompareLines(<f-args>)
+command! -nargs=* FL call <SID>FocusLines(<f-args>)
+command! -nargs=* FCL call <SID>CompareLines(<f-args>)|call <SID>FocusLines(<f-args>)
 
 " Get two different lines and put the differences in the search register
 function! s:CompareLines(...)
