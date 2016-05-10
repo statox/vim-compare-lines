@@ -54,3 +54,45 @@ function! s:CompareLines(...)
     normal n
 endfunction
 
+" Creates foldings to focus on two lines
+function! s:FocusLines(...)
+
+    if len(a:000) == 0
+        let l1=line(".")
+        let l2=line(".")+1
+    elseif len(a:000) == 1
+        let l1 =line(".")
+        let l2 =str2nr(a:1)
+    elseif len(a:000) == 2
+        let l1 = str2nr(a:1)
+        let l2 = str2nr(a:2)
+    else
+        echom "Bad number of arguments"
+        return
+    endif
+
+    " Sort the lines
+    if ( l1 > l2 )
+        let temp = l2
+        let l2 = l1
+        let l1 = temp
+    endif
+
+    " Check that the lines are in the buffer
+    if (l1 < 1 || l1 > line("$") || l2 < 1 || l2 > line("$"))
+        echom ("A selected line is not in the buffer")
+        return
+    endif
+
+    if (l1 > 1)
+        execute "1, " . ( l1 - 1 ) . "fold"
+    endif
+
+    if ( l1 != l2 )
+        execute (l1 + 1) . "," . (l2 - 1) . "fold"
+    endif
+
+    if (l2 < line('$'))
+        execute (l2 + 1) . ",$fold"
+    endif
+endfunction
