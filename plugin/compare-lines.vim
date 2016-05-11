@@ -51,7 +51,6 @@ function! s:PreTreatmentFunction(function, ...)
     if !empty(maparg('<C-c>', 'n')) 
         let s:mapping_save = maparg('<C-c>', 'n', 0, 1)
     endif
-    nunmap <C-c> 
     nnoremap <C-c> :XL<CR>
 
     " Depending on the command used call the corresponding function
@@ -121,8 +120,6 @@ endfunction
 function! s:FocusLines(l1, l2)
     let l1 = a:l1
     let l2 = a:l2
-
-    echom "focus l1, l2:" . l1 . "," . l2
 
     if (l1 > 1)
         execute "1, " . ( l1 - 1 ) . "fold"
