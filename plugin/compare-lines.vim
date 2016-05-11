@@ -43,8 +43,13 @@ function! s:PreTreatmentFunction(function, ...)
         return
     endif
 
+    " Save user configurations
     " Handle foldmethod configuration
     let s:foldmethod_save=&foldmethod
+    let s:hlsearch_save=&hlsearch
+    execute "mkview! " . &viewdir . "compare-lines"
+
+    " Change foldmethod to do ours foldings
     set foldmethod=manual
 
     " Create a mapping to quit the compare mode
@@ -68,13 +73,19 @@ function! s:PreTreatmentFunction(function, ...)
 endfunction
 
 function! s:RestoreAfterCompare()
-    " Remove foldings created
-    normal! zE
     " Remove search highlight
-    set nohlsearch
-    " Remove the mapping
-    unmap <C-c>
+    nohlsearch
+
+    " Remove foldings created by the plugin
+    normal! zE
+
+    " Restore user configuration
+    execute "loadview " . &viewdir ."compare-lines"
+    let &foldmethod=s:foldmethod_save
+    let &hlsearch=s:hlsearch_save
+
     " Restore the mapping to its previous value
+    unmap <C-c>
     if exists("s:mapping_save")
         execute (s:mapping_save.noremap ? 'nnoremap ' : 'nmap ') .
              \ (s:mapping_save.buffer ? ' <buffer> ' : '') .
@@ -84,8 +95,6 @@ function! s:RestoreAfterCompare()
              \ s:mapping_save.lhs . " "
              \ s:mapping_save.rhs
     endif
-    " Restore fold method
-    let &foldmethod=s:foldmethod_save
 endfunction
 
 " Get two different lines and put the differences in the search register
