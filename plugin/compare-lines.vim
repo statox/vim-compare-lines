@@ -122,7 +122,7 @@ function! s:CompareLines(l1, l2)
     " Search and highlight the diff
     execute "let @/='" . pattern . "'"
     set hlsearch
-    normal n
+    normal! n
 endfunction
 
 " Creates foldings to focus on two lines
