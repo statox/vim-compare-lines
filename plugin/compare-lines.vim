@@ -4,9 +4,13 @@
 " License:  This file is distributed under the MIT License
 
 " Create the commands
-command! -nargs=* CL call <SID>PreTreatmentFunction("Compare", <f-args>)
-command! -nargs=* FL call <SID>PreTreatmentFunction("Focus", <f-args>)
-command! -nargs=* FCL call <SID>PreTreatmentFunction("CompareFocus", <f-args>)
+command! -nargs=* CL                 call <SID>PreTreatmentFunction("Compare", <f-args>)
+command! -nargs=* CompareLines       call <SID>PreTreatmentFunction("Compare", <f-args>)
+command! -nargs=* FL                 call <SID>PreTreatmentFunction("Focus", <f-args>)
+command! -nargs=* FocusLines         call <SID>PreTreatmentFunction("Focus", <f-args>)
+command! -nargs=* FCL                call <SID>PreTreatmentFunction("CompareFocus", <f-args>)
+command! -nargs=* FocusCompareLines  call <SID>PreTreatmentFunction("CompareFocus", <f-args>)
+
 command! XL call <SID>RestoreAfterCompare()
 
 " This function is called to
