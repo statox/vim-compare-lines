@@ -1,10 +1,13 @@
 *compare-lines.txt* Diff two lines in a buffer and navigate through the changes
 
-==============================================================================
+
 Compare-lines                               *compare-lines*
 
 1. Introduction                             |compare-lines-intro|
-2. Compare-lines Usage                      |compare-lines-usage|
+2. Compare-lines Commands                   |compare-lines-commands|
+ 2.1 Compare two lines                      |:CompareLines|
+ 2.2 Focus on two lines                     |:FocusLines|
+ 2.3 Focus and compare two lines            |:FocusCompareLines|
 3. About                                    |compare-lines-about|
 
 ==============================================================================
@@ -17,10 +20,14 @@ The differences are then highlighted as searches and you can navigate through
 them with the |n| and |N| commands.
 
 ==============================================================================
-2. Compare-lines Usage                      *compare-lines-usage*
-                                            *:CL*
+2. Compare-lines Commands                   *compare-lines-commands*
 
-Compare-lines enable the *:CL* command which start the diff between two lines.
+2.1 Compare two lines                       *:CL* *:CompareLines*
+
+Select two lines and highlight the differences between them.
+The differences are put in the search register, this way the use can navigate
+through the differences with the |n| and |N| normal mode commands.
+
 The command can be used with three types of invocation:
 
 >
@@ -38,6 +45,41 @@ Will start the diff between the current line and the line 42.
     :CL 42 66
 <
 Will start the diff between the line 42 and the line 66.
+
+2.2 Focus on two lines                      *:FL* *:FocusLines*
+
+Select two lines and focus on them. The focus is achieved by folding the lines
+which are not select. This way only the selected lines are shown in the
+buffer.
+
+This command can be invoqued in the same way as |:CompareLines|. I.e:
+
+>
+    :FL
+<
+>
+    :FL 42
+<
+>
+    :FL 42 66
+<
+2.3 Focus and compare two lines             *:FCL* *:FocusCompareLines*
+
+Combines the commands |:FocusLines| and |:CompareLines|. The lines selected
+are the only one shown in the buffer and their differences are highlighted
+thanks to the search feature.
+
+This command can be invoqued in the same way as |:CompareLines|. I.e:
+
+>
+    :FCL
+<
+>
+    :FCL 42
+<
+>
+    :FCL 42 66
+
 
 ==============================================================================
 3. Compare-lines About                      *compare-lines-about*
