@@ -81,7 +81,9 @@ endfunction
 
 function! s:RestoreAfterCompare()
     " Remove search highlight
-    nohlsearch
+    if (s:current_matching != -1)
+        call matchdelete(s:current_matching)
+    endif
 
     " Remove foldings created by the plugin
     normal! zE
@@ -239,6 +241,7 @@ endfunction
 function! s:CompareLines(l1, l2)
     let l1 = a:l1
     let l2 = a:l2
+    let s:current_matching = -1
 
     " Get the content of the lines
     let line1 = getline(l1)
@@ -259,8 +262,8 @@ function! s:CompareLines(l1, l2)
 
     " Search and highlight the diff
     execute "let @/='" . pattern . "'"
-    set hlsearch
     normal! n
+    let s:current_matching = matchadd('error', pattern)
 endfunction
 
 " Creates foldings to focus on two lines
