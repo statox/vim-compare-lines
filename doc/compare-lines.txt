@@ -13,8 +13,8 @@ Compare-lines                               *compare-lines*
 ==============================================================================
 1. Introduction                             *compare-lines-intro*
 
-Compare-lines is a plugin which allows you to select two lines and put the
-differencies between these lines in the search register.
+Compare-lines is a plug-in which allows you to select two lines and put the
+differences between these lines in the search register.
 
 The differences are then highlighted as searches and you can navigate through
 them with the |n| and |N| commands.
@@ -34,7 +34,7 @@ The command can be used with three types of invocation:
     :CL
 <
 Will start the diff between current line (where the cursor is currently
-positionned) and the line under it.
+positioned) and the line under it.
 
 >
     :CL 42
@@ -52,7 +52,7 @@ Select two lines and focus on them. The focus is achieved by folding the lines
 which are not select. This way only the selected lines are shown in the
 buffer.
 
-This command can be invoqued in the same way as |:CompareLines|. I.e:
+This command can be invoked in the same way as |:CompareLines|. I.e:
 
 >
     :FL
@@ -69,7 +69,7 @@ Combines the commands |:FocusLines| and |:CompareLines|. The lines selected
 are the only one shown in the buffer and their differences are highlighted
 thanks to the search feature.
 
-This command can be invoqued in the same way as |:CompareLines|. I.e:
+This command can be invoked in the same way as |:CompareLines|. I.e:
 
 >
     :FCL
@@ -84,14 +84,14 @@ This command can be invoqued in the same way as |:CompareLines|. I.e:
 ==============================================================================
 3. Compare-lines About                      *compare-lines-about*
 
-This plugin was inspired by this question on the site vi.stackexchange.com:
+This plug-in was inspired by this question on the site vi.stackexchange.com:
     http://vi.stackexchange.com/q/7348/1841
 
-The sources of the plugin are available on github:
+The sources of the plug-in are available on github:
     http://github.com/statox/vim-compare-lines
 
-The plugin is distributed under the MIT license. See the LICENSE file which
-comes with the plugin, or here:
+The plug-in is distributed under the MIT license. See the LICENSE file which
+comes with the plug-in, or here:
     https://opensource.org/licenses/MIT
 
 
