@@ -208,33 +208,6 @@ function! LCSrecu(l1, l2)
     endif
 endfunction
 
-
-function! GenerateStringPermutations(l1, l2)
-    let permutations = []
-    let continue = 1
-    let iterations = 0
-
-    for startIndex in range(0, len(a:l1)-1)
-        let permutationsIndex = []
-        let continue = 1
-        let permutationSize = len(a:l1)-startIndex
-
-        for permutationSize in range(1, len(a:l1)-startIndex)
-            let iterations += 1
-            let permutation = strpart(a:l1, startIndex, permutationSize)
-            if match(a:l2, permutation) != -1
-                call add(permutationsIndex, permutation)
-            else
-                let continue = 0
-            endif
-        endfor
-        call add(permutations, permutationsIndex)
-    endfor
-
-    echo "iterations: " . iterations
-    return permutations
-endfunction
-
 " Get two different lines and put the differences in the search register
 function! s:CompareLines(l1, l2)
     let l1 = a:l1
