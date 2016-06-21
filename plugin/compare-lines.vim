@@ -12,8 +12,6 @@ command! -nargs=* FocusLines         call <SID>PreTreatmentFunction("Focus", <f-
 command! -nargs=* FCL                call <SID>PreTreatmentFunction("CompareFocus", <f-args>)
 command! -nargs=* FocusCompareLines  call <SID>PreTreatmentFunction("CompareFocus", <f-args>)
 
-command! XL call <SID>RestoreAfterCompare()
-
 " This function is called to
 " - get the line numbers
 " - check their existence in the buffer
@@ -61,7 +59,7 @@ function! s:PreTreatmentFunction(function, ...)
     if !empty(maparg('<C-c>', 'n')) 
         let s:mapping_save = maparg('<C-c>', 'n', 0, 1)
     endif
-    nnoremap <C-c> :XL<CR>
+    nnoremap <C-c> :call <SID>RestoreAfterCompare()<CR>
 
     " Depending on the command used call the corresponding function
     if a:function == "Compare"
