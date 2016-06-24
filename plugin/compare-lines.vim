@@ -113,99 +113,82 @@ function! s:CompareLines2(l1, l2)
     let line1 = getline(l1)
     let line2 = getline(l2)
 
-    let pattern = ""
+    let LCS = LCSpython(line1, line2)
+    echo "LCS: " . LCS
 
-    echo "LCS: " . LCSdynamic(line1, line2)
+    let pattern=""
+    let loop=1
+    let i=0
+    let j=1
 
-    "let permutationsL1 = GenerateStringPermutations(line1, line2)
-    "echo "nombre de permutations: " . len(permutationsL1)
-    "echo permutationsL1
+    while loop==1
+        echo "i " . i . "  j " . j . "  strpart " . strpart(LCS, i, j) . "  match " . matchstr(line1, strpart(LCS, i, j))
 
-    " Search and highlight the diff
-    "execute "let @/='" . pattern . "'"
-    "set hlsearch
-    "normal! n
-endfunction
-
-function! FillRecursive(len1, len2, char)
-  if a:len2 == -1
-    return map(range(a:len1), a:char)
-  endif
-
-  return map(range(a:len1), 'FillRecursive(a:len2, -1, a:char)')
-endfunction
-
-function! LCSdynamic(l1, l2)
-    let len1 = len(a:l1)
-    let len2 = len(a:l2)
-
-    " Initialize the matrix with zeros
-    let lengths = FillRecursive(len1 + 1, len2 + 1, 0)
-    
-    " Caculate the values of the matrix
-    for i in range(len1)
-        let x = a:l1[i]
-        for j in range(len2)
-            let y = a:l2[j]
-            if x == y
-                let lengths[i+1][j+1] = lengths[i][j] + 1
-            else
-                let lengths[i+1][j+1] = max([lengths[i+1][j], lengths[i][j+1]])
-            endif
-        endfor
-    endfor
-
-    " Read the substring out from the matrix
-    let result = ""
-    let x = len1
-    let y = len2
-    let cpt = 2
-    let continue = 1
-
-    while (x != 0 && y != 0)
-       if ( lengths[x][y] == lengths[x-1][y] )
-            let x -= 1
-        elseif ( lengths[x][y] == lengths[x][y-1] )
-            let y -= 1
+        if matchstr(line1, strpart(LCS, i, j)) != ""
+            let j += 1
         else
-            "TEST
-
-            if ( a:l1[x-1] != a:l2[y-1] )
-                throw "AssertionError"
+            echo "matche plus"
+            if strpart(line1, i, j-1) != ""
+                let pattern = pattern . "\\|" . strpart(LCS, i, j-1)
+                echo "pattern " . pattern
             endif
-
-            "TEST
-
-
-            let result = a:l1[x-1] . result
-            let x -= 1
-            let y -= 1
-        endif 
+            let i = i+j-1
+            let j = 1
+        endif
+        if j >= len(LCS) -1
+            let loop = 0
+        endif
     endwhile
 
-    return result
+    echo "pattern: " . pattern
+
+"abcdefghi
+"abdehi
+    
+    " Search and highlight the diff
+    execute "let @/='" . pattern . "'"
+    normal! n
+    "let s:current_matching = matchadd('Search', pattern)
+    let s:current_matching = matchadd('error', pattern)
 endfunction
 
-function! LCSrecu(l1, l2)
-    "http://rosettacode.org/wiki/Longest_common_subsequence#Java
+"From http://rosettacode.org/wiki/Longest_common_subsequence#Python
+" Find the longest common subsequence between two strings
+function! LCSpython(line1, line2)
+let LCS=""
+python << EOF
+import vim
+def lcs(a, b):
+    lengths = [[0 for j in range(len(b)+1)] for i in range(len(a)+1)]
 
-    let len1 = len(a:l1)
-    let len2 = len(a:l2)
+    # row 0 and column 0 are initialized to 0 already
+    for i, x in enumerate(a):
+        for j, y in enumerate(b):
+            if x == y:
+                lengths[i+1][j+1] = lengths[i][j] + 1
+            else:
+                lengths[i+1][j+1] = max(lengths[i+1][j], lengths[i][j+1])
 
-    if (len1 == 0 || len2 == 0)
-        return ""
-    elseif (a:l1[len1-1] == a:l2[len2-1])
-        return LCS(strpart(a:l1, 0, len1-1),strpart(a:l2, 0, len2-1)) . a:l1[len1-1]
-    else
-        let x = LCS(a:l1, strpart(a:l2, 0, len2-1))
-        let y = LCS(strpart(a:l1, 0, len1-1), a:l2)
+    # read the substring out from the matrix
+    result = ""
+    x, y = len(a), len(b)
+    while x != 0 and y != 0:
+        if lengths[x][y] == lengths[x-1][y]:
+            x -= 1
+        elif lengths[x][y] == lengths[x][y-1]:
+            y -= 1
+        else:
+            assert a[x-1] == b[y-1]
 
-        if len(x) > len(y)
-            return x
-        else
-            return y
-        endif
-    endif
+            result = a[x-1] + result
+            x -= 1
+            y -= 1
+
+    return result
+
+vim.command("let LCS='%s'"% lcs(vim.eval("a:line1"), vim.eval("a:line2")))
+EOF
+return LCS
 endfunction
 
 " Get two different lines and put the differences in the search register
@@ -234,6 +217,7 @@ function! s:CompareLines(l1, l2)
     " Search and highlight the diff
     execute "let @/='" . pattern . "'"
     normal! n
+    "let s:current_matching = matchadd('Search', pattern)
     let s:current_matching = matchadd('error', pattern)
 endfunction
 
