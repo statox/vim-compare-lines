@@ -117,42 +117,58 @@ function! s:CompareLines2(l1, l2)
     let LCS = LCSpython(line1, line2)
     echo "LCS: " . LCS
 
-    let pattern=""
-    let loop=1
-    let i=0
-    let j=1
-    
     " Get the differences between the first line and the LCS
+    let pattern1=""
     let diffs=[]
     let i=0
     let j=0
     for i in range(0, len(line1))
         if strpart(line1, i, 1) == strpart(LCS, j, 1)
             let j+=1
-            "if pattern != ""
-                call add(diffs, pattern)
-                let pattern=""
+            "if pattern1 != ""
+                call add(diffs, pattern1)
+                let pattern1=""
             "endif
         else
-            let pattern = pattern . strpart(line1, i, 1)
+            let pattern1 = pattern1 . strpart(line1, i, 1)
         endif
     endfor
     " Remove the empty parts
     call filter(diffs, 'count(diffs, v:val) == 1')
     " Join with a "and" in regex
-    let pattern = join(diffs, '\|')
+    let pattern1 = join(diffs, '\|')
     " Add the line number and remove the last "\|"
-    let pattern = "\\%" . l1 . "l" . strpart(pattern, 0, len(pattern)-2)
+    let pattern1 = "\\%" . l1 . "l" . strpart(pattern1, 0, len(pattern1)-2)
 
-    echom "pattern: " . pattern
+    " Get the differences between the second line and the LCS
+    let pattern2=""
+    let diffs=[]
+    let i=0
+    let j=0
+    for i in range(0, len(line2))
+        if strpart(line2, i, 1) == strpart(LCS, j, 1)
+            let j+=1
+            "if pattern2 != ""
+                call add(diffs, pattern2)
+                let pattern2=""
+            "endif
+        else
+            let pattern2 = pattern2 . strpart(line2, i, 1)
+        endif
+    endfor
+    " Remove the empty parts
+    call filter(diffs, 'count(diffs, v:val) == 1')
+    " Join with a "and" in regex
+    let pattern2 = join(diffs, '\|')
+    " Add the line number and remove the last "\|"
+    let pattern2 = "\\%" . l2 . "l" . strpart(pattern2, 0, len(pattern2)-2)
 
-"abcdefghi
-"abdehi
+    " Join the patterns for both lines
+    let pattern = pattern1 . '\|' . pattern2
     
     " Search and highlight the diff
     execute "let @/='" . pattern . "'"
     normal! n
-    "let s:current_matching = matchadd('Search', pattern)
     let s:current_matching = matchadd('error', pattern)
 endfunction
 
