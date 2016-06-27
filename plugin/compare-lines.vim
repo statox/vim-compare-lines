@@ -113,6 +113,7 @@ function! s:CompareLines2(l1, l2)
     let line1 = getline(l1)
     let line2 = getline(l2)
 
+    " Get the longest common sequence between the lines
     let LCS = LCSpython(line1, line2)
     echo "LCS: " . LCS
 
@@ -120,27 +121,30 @@ function! s:CompareLines2(l1, l2)
     let loop=1
     let i=0
     let j=1
-
-    while loop==1
-        echo "i " . i . "  j " . j . "  strpart " . strpart(LCS, i, j) . "  match " . matchstr(line1, strpart(LCS, i, j))
-
-        if matchstr(line1, strpart(LCS, i, j)) != ""
-            let j += 1
+    
+    " Get the differences between the first line and the LCS
+    let diffs=[]
+    let i=0
+    let j=0
+    for i in range(0, len(line1))
+        if strpart(line1, i, 1) == strpart(LCS, j, 1)
+            let j+=1
+            "if pattern != ""
+                call add(diffs, pattern)
+                let pattern=""
+            "endif
         else
-            echo "matche plus"
-            if strpart(line1, i, j-1) != ""
-                let pattern = pattern . "\\|" . strpart(LCS, i, j-1)
-                echo "pattern " . pattern
-            endif
-            let i = i+j-1
-            let j = 1
+            let pattern = pattern . strpart(line1, i, 1)
         endif
-        if j >= len(LCS) -1
-            let loop = 0
-        endif
-    endwhile
+    endfor
+    " Remove the empty parts
+    call filter(diffs, 'count(diffs, v:val) == 1')
+    " Join with a "and" in regex
+    let pattern = join(diffs, '\|')
+    " Add the line number and remove the last "\|"
+    let pattern = "\\%" . l1 . "l" . strpart(pattern, 0, len(pattern)-2)
 
-    echo "pattern: " . pattern
+    echom "pattern: " . pattern
 
 "abcdefghi
 "abdehi
