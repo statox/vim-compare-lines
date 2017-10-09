@@ -114,7 +114,7 @@ function! s:CompareLines(l1, l2)
 
     " Compare lines and create pattern of diff
     for i in range(strlen(line1))
-        if strpart(line1, i, 1) != strpart(line2, i, 1)
+        if strpart(line1, i, 1) !=# strpart(line2, i, 1)
             if pattern != ""
                 let pattern = pattern . "\\|"
             endif
